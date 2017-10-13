@@ -34,7 +34,7 @@ config_secret_common_dict = dict(json.loads(config_secret_common_str))
 # 3. config_secret_common_dict 변수의 django > secret_key에
 # 해당하는 value를 SECRET_KEY
 SECRET_KEY = config_secret_common_dict['django']['secret_key']
-# 4. .gitignore에 .config_secret/ 반영 
+# 4. .gitignore에 .config_secret/ 반영
 
 
 # Quick-start development settings - unsuitable for production
@@ -96,12 +96,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = config_secret_common_dict['django']['databases']
 
 
 # Password validation
