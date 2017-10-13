@@ -28,6 +28,8 @@ MEDIA_URL = '/media/'
 # instagram_project/instagram/static/.
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
 
 # 1. CONFIG_SECRET_DIR내의 'settings_common.json'파일을 읽고 ,
 # 그 결과를 config_secret_common_str변수에 할당
