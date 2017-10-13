@@ -5,7 +5,7 @@ class Post(models.Model):
     photo = models.ImageField(upload_to='photo', max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class PostComment:
+class PostComment(models.Model):
     post = models.ForeignKey(
         Post,
         blank=True,
