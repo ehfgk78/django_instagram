@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+        {% if post.photo %}
+        <img src="{{post.photo.url}}" alt="">
+        {% else %}
+        <p>이미지 파일이 없습니다.</p>
+        {% endif %}
+
+    <form action="{% url 'add_comment' post_pk=pk %}" method="POST">
+        {% csrf_token %}
+        {{ comment_form }}
+        <button class="btn-primary btn btn-block">작성</button>
+    </form>
+
+    {% for comment in post.comments.all %}
+    <li>{{ comment.content }}</li>
+    {% endfor %}
+</div>
+
+{% endblock %}

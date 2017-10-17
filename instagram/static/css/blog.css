@@ -1,0 +1,41 @@
+.blog-header {
+    background-color: #7cb4e4;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+.blog-header .blog-title {
+    margin: 0;
+}
+.blog-header .blog-title > a,
+.blog-header .blog-title > a:hover,
+.blog-header .blog-title > a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.post-container {
+
+}
+.post-container > .btn-back-list {
+    margin-top: 10px;
+}
+
+.post-container > .post {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #999;
+}
+.post-container > .post > p {
+    margin: 0;
+}
+.post-container > .post > p.right-text {
+    text-align: right;
+    font-size: 10px;
+    color: #666;
+}
+.post-container > .post > p.right-text > strong {
+    width: 50px;
+    display: inline-block;
+    text-align: left;
+}
