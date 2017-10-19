@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
 {% block content %}
-    {% if user.is_active %}
-        <h2>{{ user.username }} 안녕?</h2>
-{#        <a href="{% url 'signout' %}">Logout</a>#}
-    {% else %}
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <button class="btn-primary" type="submit">Login</button>
-        </form>
-    {% endif %}
+<div class="login-container">
+	{% include 'include/form-horizontal.html' with form=login_form submit_text='로그인' %}
+</div>
 {% endblock %}

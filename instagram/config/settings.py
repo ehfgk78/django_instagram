@@ -14,8 +14,6 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # instagram_project/instagram
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # instagram_project/
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -32,14 +30,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
+AUTH_USER_MODEL = 'member.User'
 
 # 1. CONFIG_SECRET_DIR내의 'settings_common.json'파일을 읽고 ,
 # 그 결과를 config_secret_common_str변수에 할당
-with open( os.path.join(CONFIG_SECRET_DIR, 'settings_common.json') ) as f:
-    config_secret_common_str= f.read()
+with open(os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')) as f:
+    config_secret_common_str = f.read()
 # 2. json.loads(<json string>)함수를 호출하여
 # JSON텍스트 파일의 내용을 Python dict형태로 변환,
 # config_secret_common에 할당
@@ -64,7 +62,6 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -77,6 +74,7 @@ INSTALLED_APPS = [
 
     'post',
     'django_extensions',
+    'member',
 ]
 
 MIDDLEWARE = [
@@ -111,12 +109,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = config_secret_common_dict['django']['databases']
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -136,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -149,7 +144,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

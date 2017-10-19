@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
+{% block title %}Post create{% endblock %}
 {% block content %}
 
-
-<div>
-    <form action="{% url 'post_list' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <!--<input type="file" name="photo">-->
-        <button>사진 올리기</button>
-    </form>
+<div class="post_create">
+	<form action="" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+        {% for field in form %}
+			<div class="form-group">
+				{{ field.label_tag }}
+				{{ field }}
+			</div>
+		{% endfor %}
+		<button class="btn btn-primary btn-block">포스트 등록</button>
+	</form>
 </div>
-
 {% endblock %}

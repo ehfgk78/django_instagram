@@ -1,0 +1,44 @@
+ <div id="post-{{ post.pk }}" class="panel panel-default post">
+        <div class="panel-heading">
+            <div>작성자: <strong>{{ post.author }}</strong></div>
+            <div>
+                {% if request.user == post.author %}
+                <form action="{% url 'post:post_delete' post_pk=post.pk %}"
+                      method="post">
+                    {% csrf_token %}
+                    <button type="submit">삭제</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        <div class="panel-body">
+            <a href="{% url 'post:post_detail' post_pk=post.pk %}">
+                <img src="{{ post.photo.url }}" class="img-post">
+            </a>
+            <div class="body-content">
+                <ul id="post-comments-{{ post.pk }}">
+                    {% for comment in post.comments.all %}
+                    <li>
+                        <div>{{ comment.author}} - {{ comment.content }}</div>
+                        <div>
+                            {% if comment.author == request.user %}
+                            <form action="{% url 'post:comment_delete' comment_pk=comment.pk %}"
+                                method="POST">
+                                {% csrf_token %}
+                                <button type="submit">삭제</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <form
+                        action="{% url 'post:comment_create' post_pk=post.pk %}?next=/post/#post-comments-{{ post.pk }}"
+                        method="POST">
+                    {% csrf_token %}
+                    {{ comment_form }}
+                    <button class="btn btn-primary btn-block">댓글달기</button>
+                </form>
+            </div>
+        </div>
+    </div>

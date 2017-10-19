@@ -14,31 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from member.views import signup, signin, signout
-from post import views
-
 urlpatterns = [
+    # Django admin
     url(r'^admin/', admin.site.urls),
-    url(r'^post/$',
-        views.post_list,
-        name='post_list'),
-    url(r'^post/create/$',
-        views.post_create,
-        name='post_create'),
-    url(r'^post/(?P<post_pk>\d+)/$',
-        views.post_detail,
-        name='post_detail'),
-    url(r'^post/(?P<post_pk>\d+)/comment/create/$',
-        views.comment_create,
-        name='comment_create'),
 
-    url(r'^members/signup/$', signup, name='signup'),
-    url(r'^members/login/$', signin, name='signin'),
-    url(r'^members/logout/$', signout, name='signout'),
+    # Post application
+    url(r'^post/', include('post.urls', namespace='post')),
+    # Member application
+    url(r'^member/', include('member.urls', namespace='member')),
 ]
 
 urlpatterns += static(
