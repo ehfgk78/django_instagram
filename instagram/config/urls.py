@@ -18,9 +18,12 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
+from config.views import to_post_list
+
 urlpatterns = [
     # Django admin
     url(r'^admin/', admin.site.urls),
+    url(r'^$', to_post_list),
 
     # Post application
     url(r'^post/', include('post.urls', namespace='post')),

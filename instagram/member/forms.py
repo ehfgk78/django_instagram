@@ -79,7 +79,13 @@ class SignupForm(forms.Form):
             }
         )
     )
-    age = forms.IntegerField()
+    age = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
 
     # clean_<field_name>
     def clean_username(self):

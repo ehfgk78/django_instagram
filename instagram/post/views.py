@@ -1,7 +1,5 @@
-"""
-post_list뷰를 'post/' URL에 할당
-"""
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -51,9 +49,13 @@ def post_detail(request, post_pk):
 
 
 def post_delete(request, post_pk):
-    post = get_object_or_404(Post, pk=post_pk)
-    post.delete()
-    return redirect('post:post_list')
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_pk)
+        if post.author == request.user:
+            post.delete()
+            return redirect('post:post_list')
+        else:
+            raise PermissionDenied
 
 
 def comment_create(request, post_pk):
@@ -69,9 +71,13 @@ def comment_create(request, post_pk):
                 content=form.cleaned_data['content'],
                 author=request.user,
             )
-            next = request.GET.get('next')
+            # GET parameter로 'next'값이 전달되면
+            # 공백을 없애고 다음에 redirect될 주소로 지정
+            next = request.GET.get('next', '').strip()
+            # 다음에 갈 URL (next)가 빈 문자열이 아닌 경우
             if next:
                 return redirect(next)
+            # 지정되지 않으면 post_detail로 이동
             return redirect('post:post_detail', post_pk=post_pk)
 
 

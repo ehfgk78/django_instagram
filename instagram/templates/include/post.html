@@ -33,8 +33,14 @@
                     {% endfor %}
                 </ul>
                 <form
-                        action="{% url 'post:comment_create' post_pk=post.pk %}?next=/post/#post-comments-{{ post.pk }}"
+                        action="{% url 'post:comment_create' post_pk=post.pk %}?next=
+                        {% if post_type == 'list' %}
+                                 /post/#post-comments-{{ post.pk }}
+                        {% elif post_type == 'detail' %}
+                                  {% url 'post:post_detail' post_pk=post.pk %}
+                        {% endif %}"
                         method="POST">
+
                     {% csrf_token %}
                     {{ comment_form }}
                     <button class="btn btn-primary btn-block">댓글달기</button>
