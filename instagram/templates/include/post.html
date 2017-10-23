@@ -1,50 +1,71 @@
- <div id="post-{{ post.pk }}" class="panel panel-default post">
-        <div class="panel-heading">
-            <div>작성자: <strong>{{ post.author }}</strong></div>
-            <div>
-                {% if request.user == post.author %}
-                <form action="{% url 'post:post_delete' post_pk=post.pk %}"
-                      method="post">
-                    {% csrf_token %}
-                    <button type="submit">삭제</button>
-                </form>
-                {% endif %}
-            </div>
+<div id="post-{{ post.pk }}" class="panel panel-default post">
+     <div class="panel-heading">
+        <div>작성자: <strong>{{ post.author.username }}</strong></div>
+        <div>
+            {% if user == post.author %}
+            <form action="{% url 'post:post_delete' post_pk=post.pk %}"
+                  method="post">
+                {% csrf_token %}
+                <button type="submit">삭제</button>
+            </form>
+            {% endif %}
         </div>
-        <div class="panel-body">
-            <a href="{% url 'post:post_detail' post_pk=post.pk %}">
-                <img src="{{ post.photo.url }}" class="img-post">
-            </a>
-            <div class="body-content">
-                <ul id="post-comments-{{ post.pk }}">
-                    {% for comment in post.comments.all %}
-                    <li>
-                        <div>{{ comment.author}} - {{ comment.content }}</div>
-                        <div>
-                            {% if comment.author == request.user %}
-                            <form action="{% url 'post:comment_delete' comment_pk=comment.pk %}"
-                                method="POST">
-                                {% csrf_token %}
-                                <button type="submit">삭제</button>
-                            </form>
-                            {% endif %}
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <form
-                        action="{% url 'post:comment_create' post_pk=post.pk %}?next=
+    </div>
+
+
+    <div class="panel-body">
+        <a href="{% url 'post:post_detail' post_pk=post.pk %}">
+            <img src="{{ post.photo.url }}" class="img-post">
+        </a>
+        <div class="body-content">
+            <div class="btn-container">
+                <form action="{% url 'post:post_like_toggle' post_pk=post.pk %}"  method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-default border-none" aria-label="Like button">
+                        <span class="glyphicon
+                             {% if post in user.like_posts.all %}
+                                 glyphicon-heart
+                             {% else %}
+                                 glyphicon-heart-empty
+                             {% endif %}"  aria-hidden="true"></span>
+                     </button>
+                </form>
+            </div>
+
+            <ul id="post-comments-{{ post.pk }}">
+                {% for comment in post.comments.all %}
+                <li>
+                    <div>{{ comment.author}} - {{ comment.content }}</div>
+                    <div>
+                        {% if comment.author == user %}
+                        <form action="{% url 'post:comment_delete' comment_pk=comment.pk %}"
+                              {% if post_type == 'list' %}
+                                   {% url 'post:post_list' %}#post-{{ post.pk }}
+                              {% elif post_type == 'detail' %}
+                                   {% url 'post:post_detail' post_pk=post.pk %}
+                        {% endif %}
+                        method="POST" >
+                        {% csrf_token %}
+                        <button type="submit">삭제</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <form
+                    action="{% url 'post:comment_create' post_pk=post.pk %}?next=
                         {% if post_type == 'list' %}
                                  /post/#post-comments-{{ post.pk }}
                         {% elif post_type == 'detail' %}
                                   {% url 'post:post_detail' post_pk=post.pk %}
                         {% endif %}"
-                        method="POST">
+                    method="POST">
 
-                    {% csrf_token %}
-                    {{ comment_form }}
-                    <button class="btn btn-primary btn-block">댓글달기</button>
-                </form>
-            </div>
+                {% csrf_token %}
+                {{ comment_form }}
+                <button class="btn btn-primary btn-block">댓글달기</button>
+            </form>
         </div>
     </div>
+</div>
