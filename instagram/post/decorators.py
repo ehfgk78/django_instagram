@@ -1,3 +1,4 @@
+from functools import wraps
 from urllib.parse import urlparse
 
 from django.shortcuts import redirect
@@ -5,6 +6,7 @@ from django.urls import reverse
 
 
 def login_required(view_func):
+    @wraps(view_func)
     def wrapper_view_func(*args, **kwargs):
         request = args[0]
         if not request.user.is_authenticated:

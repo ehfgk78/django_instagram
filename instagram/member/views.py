@@ -62,3 +62,8 @@ def signup(request):
 @login_required
 def profile(request):
     return HttpResponse(f'User profile page { request.user }')
+
+def facebook_login(request):
+    print(request.GET)
+    print(request.POST)
+    return HttpResponse(f'GET: {request.GET}<br>POST:{request.POST}')

@@ -49,12 +49,15 @@ config_secret_common_dict = dict(json.loads(config_secret_common_str))
 SECRET_KEY = config_secret_common_dict['django']['secret_key']
 # 4. .gitignore에 .config_secret/ 반영
 
+# Facebook
+FACEBOOK_APP_ID = config_secret_common_dict['facebook']['app_id']
+FACEBOOK_SECRET_CODE = config_secret_common_dict['facebook']['secret_code']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY =
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
