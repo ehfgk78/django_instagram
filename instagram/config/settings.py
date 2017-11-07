@@ -51,7 +51,12 @@ SECRET_KEY = config_secret_common_dict['django']['secret_key']
 
 # Facebook
 FACEBOOK_APP_ID = config_secret_common_dict['facebook']['app_id']
-FACEBOOK_SECRET_CODE = config_secret_common_dict['facebook']['secret_code']
+FACEBOOK_APP_SECRET_CODE = config_secret_common_dict['facebook']['secret_code']
+FACEBOOK_SCOPE = [
+    'user_friends',
+    'public_profile',
+    'email',
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -79,6 +84,7 @@ INSTALLED_APPS = [
     'post',
     'django_extensions',
     'member',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

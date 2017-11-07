@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
-from post.decorators import login_required
+from member.decorators import login_required
 from .forms import PostForm, CommentForm
 from .models import Post, PostComment
 
