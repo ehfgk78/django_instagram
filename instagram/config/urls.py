@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from config.views import to_post_list
-from post.apis import PostList
+from post.apis import PostList  #, PostDetail
 
 urlpatterns = [
     # Django admin
@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^member/', include('member.urls', namespace='member')),
 
     url(r'^api/post/$', PostList.as_view(), name='api-post'),
+    # url(r'^api/post/(?P<pk>\d+)', PostDetail.as_view(), name='api-post'),
 ]
 
 urlpatterns += static(
