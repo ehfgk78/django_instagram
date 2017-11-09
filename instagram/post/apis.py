@@ -1,26 +1,25 @@
 from django.http import Http404
+from rest_framework import generics
+from rest_framework import mixins
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from post.models import Post
 from post.serializers import PostSerializer
 
 
-class PostList(APIView):
+# 다중 상속의 순서 : 오른쪽 ---> 왼쪽
+class PostList(mixins.ListModelMixin,
+               mixins.CreateModelMixin,
+               generics.GenericAPIView):
     # generics.GenericAPIView와 mixins를 상속받아 처리
-    # api/post
-    def get(self, request):
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-    def post(self, request):
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            # 이 과정에서 author값을 request.user로 채우기
-            serializer.save(author=request.user)
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 # class PostDetail(APIView):
 #     def get_object(self, pk):
