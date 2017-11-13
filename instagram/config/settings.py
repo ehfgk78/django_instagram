@@ -34,6 +34,13 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 AUTH_USER_MODEL = 'member.User'
 LOGIN_URL = 'member:login'
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 # 1. CONFIG_SECRET_DIR내의 'settings_common.json'파일을 읽고 ,
 # 그 결과를 config_secret_common_str변수에 할당
@@ -86,6 +93,7 @@ INSTALLED_APPS = [
     'member',
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
