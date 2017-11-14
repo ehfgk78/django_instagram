@@ -14,6 +14,7 @@ from member.serializers import UserSerializer, SignupSerializer
 
 User = get_user_model()
 
+
 class Login(APIView):
     def post(self, request, *args, **kwargs):
         username = request.data['username']
@@ -72,6 +73,7 @@ class Signup(APIView):
         # }
         # return Response(data, status=status.HTTP_200_OK)
 
+
 # views.py에
 # class FrontFacebookLogin(View):
 
@@ -109,7 +111,8 @@ class FacebookLogin(APIView):
             response = requests.get(url_debug_token, params_debug_token)
             return DebugTokenInfo(**response.json()['data'])
 
-         # request.data로 전달된 access_token값을 페이스북API쪽에 debug요청, 결과를 받아옴
+            # request.data로 전달된 access_token값을 페이스북API쪽에 debug요청, 결과를 받아옴
+
         debug_token_info = get_debug_token_info(request.data['access_token'])
         if debug_token_info.user_id != request.data['facebook_user_id']:
             raise APIException('페이스북 토큰의 사용자와 전달받은 facebook_user_id가 일치하지 않음')
@@ -123,6 +126,9 @@ class FacebookLogin(APIView):
                 user_type=User.USER_TYPE_FACEBOOK,
             )
         # 유저 시리얼라이즈 결과를 Response
+        # token도 추가
+        data = {
+            'user': UserSerializer(user).data,
+            'token': user.token
+        }
         return Response(UserSerializer(user).data)
-
-
