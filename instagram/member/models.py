@@ -12,8 +12,11 @@ class UserManager(DjangoUserManager):
     def create_superuser(self, *args, **kwargs):
         return super().create_superuser(age=30, *args, **kwargs)
 
+    def create_facebook_user(self, facebook_user_id):
+        # Facebook type의 유저 생성
+        pass
 
-# Create your models here.
+
 class User(AbstractUser):
     objects = UserManager()
 
@@ -71,7 +74,6 @@ class User(AbstractUser):
         #         from_user=self,
         #         to_user=user,
         #     )
-
 
 
 class Relation(models.Model):
