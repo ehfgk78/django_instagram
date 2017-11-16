@@ -29,6 +29,8 @@ class User(AbstractUser):
     # REQUIRED_FIELDS = AbstractUser.REQUIRED_FIELDS +  ['age']
     like_posts = models.ManyToManyField(
         'post.Post',
+        related_name='like_users',
+        blank=True,
         verbose_name='좋아요 누른 포스트 목록'
     )
     following_users = models.ManyToManyField(
