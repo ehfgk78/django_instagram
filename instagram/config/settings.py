@@ -112,7 +112,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3001',
+)
 
 ROOT_URLCONF = 'config.urls'
 
