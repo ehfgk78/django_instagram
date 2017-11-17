@@ -1,6 +1,10 @@
 # custom
 .idea/
 .config_secret/
+.media/
+
+# Front code
+/front/
 
 
 # Created by https://www.gitignore.io/api/git,python,django,pycharm
@@ -183,3 +187,8 @@ venv.bak/
 .mypy_cache/
 
 # End of https://www.gitignore.io/api/git,python,django,pycharm
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

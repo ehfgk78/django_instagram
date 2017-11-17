@@ -20,9 +20,13 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 # instagram_project/.config_secret/
 CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 
-# instagram_project/instagram/media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# instagram_project/.media/
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 MEDIA_URL = '/media/'
+
+# Static Root폴더
+#   instagram_project/.static_root/
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 # instagram_project/instagram/static/.
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
@@ -80,10 +84,15 @@ FACEBOOK_SCOPE = [
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "*",
+    "localhost",
+    '.elasticbeanstalk.com',
+    'api.jskim.net',
 ]
 
-# Application definition
+# CoolSMS
+COOLSMS_API_KEY = config_secret_common_dict['coolsms']['api_key']
+COOLSMS_API_SECRET = config_secret_common_dict['coolsms']['api_secret']
+COOLSMS_SENDER = config_secret_common_dict['coolsms']['sender']  # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -115,6 +124,8 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:3001',
+    'front.localhost:8013',
+    'jskim.net',
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -142,7 +153,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = config_secret_common_dict['django']['databases']
+# DATABASES = config_secret_common_dict['django']['databases']
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -165,9 +182,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Seoul'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
